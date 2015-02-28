@@ -1,7 +1,8 @@
 {
     "build_systems": [{
         "name": "Docco",
-        "shell_cmd": "docco $project_path\\src\\Dasherize.php"
+        "shell_cmd": "docco src\\Dasherize.php",
+        "working_dir": "$project_path"
     }],
     "settings": {
         "tab_size": 4
