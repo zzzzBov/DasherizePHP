@@ -31,6 +31,7 @@ namespace zzzzbov\Utils;
 
 class Dasherize {
     const ENCODING = 'encoding';
+    const VERSION = '0.0.0';
 
     private static $charMap = array(
         'Þ' => "th",    // 0x00DE
