@@ -42,8 +42,7 @@
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
               <p>Dasherize.php Library v0.0.0</p>
-<p>A simple text-to-slug conversion tool
-<a href="https://github.com/zzzzBov/DasherizePHP">https://github.com/zzzzBov/DasherizePHP</a></p>
+<p>A simple text-to-slug conversion tool<br><a href="https://github.com/zzzzBov/DasherizePHP">https://github.com/zzzzBov/DasherizePHP</a></p>
 <p>Copyright (c) 2015 zzzzBov<br>Released under the MIT license<br><a href="http://zzzzbov.mit-license.org">http://zzzzbov.mit-license.org</a></p>
 
             </div>
@@ -261,7 +260,7 @@ If <code>$maxLength</code> is less than <code>1</code>, it will be set to <code>
         <span class="hljs-keyword">if</span> (is_null(<span class="hljs-variable">$dasherize</span>)) {
             <span class="hljs-variable">$dasherize</span> = <span class="hljs-keyword">new</span> Dasherize();
         }
-        <span class="hljs-keyword">return</span> <span class="hljs-variable">$dasherize</span>-&gt;transform(<span class="hljs-variable">$input</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-variable">$dasherize</span>-&gt;transform(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$maxLength</span>);
     }
 }</pre></div></div>
             

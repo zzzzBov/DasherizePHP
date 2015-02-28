@@ -2,7 +2,7 @@
 
 // Dasherize.php Library v0.0.0
 //
-// A simple text-to-slug conversion tool
+// A simple text-to-slug conversion tool  
 // <https://github.com/zzzzBov/DasherizePHP>
 //
 // Copyright (c) 2015 zzzzBov  
