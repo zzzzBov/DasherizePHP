@@ -18,6 +18,13 @@ class DasherizeTest extends PHPUnit_Framework_TestCase {
         $this->assertSame($output, Dasherize::defaultTransform($input), "\"{$input}\" should be dasherized as \"{$output}\"");
     }
 
+    /**
+     * @dataProvider dasherizeMaxLengthProvider
+     */
+    public function testDasherizeWithMaxLength($input, $output, $length) {
+        $this->assertSame($output, Utils\Dasherize($input, $length), "\"{$input}\" should be dasherized as \"{$output}\"");
+    }
+
     public function dasherizeProvider() {
         return array(
             array(null, ''),
@@ -38,6 +45,20 @@ class DasherizeTest extends PHPUnit_Framework_TestCase {
                 'ÂâẤấẦầẨẩẪẫẬậĈĉḒḓÊêḘḙẾếỀềỂểỄễỆệĜĝĤĥÎîĴĵḼḽṊṋÔôỐốỒồỔổỖỗỘộŜŝṰṱÛûṶṷŴŵŶŷẐẑ',
                 'aaaaaaaaaaaaccddeeeeeeeeeeeeeegghhiijjllnnoooooooooooossttuuuuwwyyzz'
             ),
+        );
+    }
+
+    public function dasherizeMaxLengthProvider() {
+        return array(
+            array(null, '', 80),
+            array('', '', 80),
+            array('lorem', 'lorem', 80),
+            array('lorem', 'lorem', 5),
+            array('lorem', 'lore', 4),
+            array('lorem', 'lor', 3),
+            array('lorem', 'lo', 2),
+            array('lorem', 'l', 1),
+            array('lorem', 'lorem', 0)
         );
     }
 }
