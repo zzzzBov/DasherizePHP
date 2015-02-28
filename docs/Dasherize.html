@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Dasherize.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>Dasherize.php</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-preprocessor">&lt;?php</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Dasherize.php Library v0.0.0</p>
+<p>A simple text-to-slug conversion tool
+<a href="https://github.com/zzzzBov/DasherizePHP">https://github.com/zzzzBov/DasherizePHP</a></p>
+<p>Copyright (c) 2015 zzzzBov<br>Released under the MIT license<br><a href="http://zzzzbov.mit-license.org">http://zzzzbov.mit-license.org</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">zzzzbov</span>\<span class="hljs-title">Utils</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <h2 id="dasherize-function">Dasherize Function</h2>
+<p><em>string</em> <code>Dasherize</code>(<em>string</em> <code>$input</code>, [<em>int</em> <code>$maxLength = 80</code>])</p>
+<p>call <code>Dasherize</code> to perform a default dasherize transformation on the
+provided <code>$input</code>, truncated to <code>$maxLength</code>. If <code>$maxLength</code> is less
+than <code>1</code>, it will be set to <code>PHP_INT_MAX</code>.</p>
+<p><strong>Example 1</strong> - <code>$input</code> only</p>
+<pre><code><span class="hljs-keyword">echo</span> zzzzbov\Utils\Dasherize(<span class="hljs-string">'Lorem Ipsum Dolor Sit Amet'</span>);
+<span class="hljs-comment">// 'lorem-ipsum-dolor-sit-amet'</span>
+</code></pre><p><strong>Example 2</strong> - <code>$input</code> and <code>$maxLength</code></p>
+<pre><code><span class="hljs-keyword">echo</span> zzzzbov\Utils\Dasherize(<span class="hljs-string">'Lorem Ipsum Dolor Sit Amet'</span>, <span class="hljs-number">11</span>);
+<span class="hljs-comment">// 'lorem-ipsum'</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Dasherize</span><span class="hljs-params">(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$maxLength</span> = <span class="hljs-number">80</span>)</span> </span>{
+    <span class="hljs-keyword">return</span> Dasherize::defaultTransform(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$maxLength</span>);
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h2 id="dasherize-class">Dasherize Class</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Dasherize</span> </span>{
+
+    <span class="hljs-keyword">const</span> ENCODING = <span class="hljs-string">'encoding'</span>;
+
+    <span class="hljs-keyword">const</span> VERSION = <span class="hljs-string">'0.0.0'</span>;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-variable">$charMap</span> = <span class="hljs-keyword">array</span>(
+        <span class="hljs-string">'Þ'</span> =&gt; <span class="hljs-string">"th"</span>,    <span class="hljs-comment">/* 0x00DE */</span> <span class="hljs-string">'ß'</span> =&gt; <span class="hljs-string">"ss"</span>,    <span class="hljs-comment">/* 0x00DF */</span> <span class="hljs-string">'à'</span> =&gt; <span class="hljs-string">"a"</span>,     <span class="hljs-comment">/* 0x00E0 */</span> <span class="hljs-string">'á'</span> =&gt; <span class="hljs-string">"a"</span>,     <span class="hljs-comment">/* 0x00E1 */</span> <span class="hljs-string">'â'</span> =&gt; <span class="hljs-string">"a"</span>,     <span class="hljs-comment">/* 0x00E2 */</span> <span class="hljs-string">'ã'</span> =&gt; <span class="hljs-string">"a"</span>,     <span class="hljs-comment">/* 0x00E3 */</span>
+        <span class="hljs-string">'ä'</span> =&gt; <span class="hljs-string">"a"</span>,     <span class="hljs-comment">/* 0x00E4 */</span> <span class="hljs-string">'å'</span> =&gt; <span class="hljs-string">"a"</span>,     <span class="hljs-comment">/* 0x00E5 */</span> <span class="hljs-string">'æ'</span> =&gt; <span class="hljs-string">"ae"</span>,    <span class="hljs-comment">/* 0x00E6 */</span> <span class="hljs-string">'ç'</span> =&gt; <span class="hljs-string">"c"</span>,     <span class="hljs-comment">/* 0x00E7 */</span> <span class="hljs-string">'è'</span> =&gt; <span class="hljs-string">"e"</span>,     <span class="hljs-comment">/* 0x00E8 */</span> <span class="hljs-string">'é'</span> =&gt; <span class="hljs-string">"e"</span>,     <span class="hljs-comment">/* 0x00E9 */</span>
+        <span class="hljs-string">'ê'</span> =&gt; <span class="hljs-string">"e"</span>,     <span class="hljs-comment">/* 0x00EA */</span> <span class="hljs-string">'ë'</span> =&gt; <span class="hljs-string">"e"</span>,     <span class="hljs-comment">/* 0x00EB */</span> <span class="hljs-string">'ì'</span> =&gt; <span class="hljs-string">"i"</span>,     <span class="hljs-comment">/* 0x00EC */</span> <span class="hljs-string">'í'</span> =&gt; <span class="hljs-string">"i"</span>,     <span class="hljs-comment">/* 0x00ED */</span> <span class="hljs-string">'î'</span> =&gt; <span class="hljs-string">"i"</span>,     <span class="hljs-comment">/* 0x00EE */</span> <span class="hljs-string">'ï'</span> =&gt; <span class="hljs-string">"i"</span>,     <span class="hljs-comment">/* 0x00EF */</span>
+        <span class="hljs-string">'ð'</span> =&gt; <span class="hljs-string">"o"</span>,     <span class="hljs-comment">/* 0x00F0 */</span> <span class="hljs-string">'ñ'</span> =&gt; <span class="hljs-string">"n"</span>,     <span class="hljs-comment">/* 0x00F1 */</span> <span class="hljs-string">'ò'</span> =&gt; <span class="hljs-string">"o"</span>,     <span class="hljs-comment">/* 0x00F2 */</span> <span class="hljs-string">'ó'</span> =&gt; <span class="hljs-string">"o"</span>,     <span class="hljs-comment">/* 0x00F3 */</span> <span class="hljs-string">'ô'</span> =&gt; <span class="hljs-string">"o"</span>,     <span class="hljs-comment">/* 0x00F4 */</span> <span class="hljs-string">'õ'</span> =&gt; <span class="hljs-string">"o"</span>,     <span class="hljs-comment">/* 0x00F5 */</span>
+        <span class="hljs-string">'ö'</span> =&gt; <span class="hljs-string">"o"</span>,     <span class="hljs-comment">/* 0x00F6 */</span> <span class="hljs-string">'ø'</span> =&gt; <span class="hljs-string">"o"</span>,     <span class="hljs-comment">/* 0x00F8 */</span> <span class="hljs-string">'ù'</span> =&gt; <span class="hljs-string">"u"</span>,     <span class="hljs-comment">/* 0x00F9 */</span> <span class="hljs-string">'ú'</span> =&gt; <span class="hljs-string">"u"</span>,     <span class="hljs-comment">/* 0x00FA */</span> <span class="hljs-string">'û'</span> =&gt; <span class="hljs-string">"u"</span>,     <span class="hljs-comment">/* 0x00FB */</span> <span class="hljs-string">'ü'</span> =&gt; <span class="hljs-string">"u"</span>,     <span class="hljs-comment">/* 0x00FC */</span>
+        <span class="hljs-string">'ý'</span> =&gt; <span class="hljs-string">"y"</span>,     <span class="hljs-comment">/* 0x00FD */</span> <span class="hljs-string">'ÿ'</span> =&gt; <span class="hljs-string">"y"</span>,     <span class="hljs-comment">/* 0x00FF */</span> <span class="hljs-string">'ą'</span> =&gt; <span class="hljs-string">"a"</span>,     <span class="hljs-comment">/* 0x0105 */</span> <span class="hljs-string">'ć'</span> =&gt; <span class="hljs-string">"c"</span>,     <span class="hljs-comment">/* 0x0107 */</span> <span class="hljs-string">'ĉ'</span> =&gt; <span class="hljs-string">"c"</span>,     <span class="hljs-comment">/* 0x0109 */</span> <span class="hljs-string">'č'</span> =&gt; <span class="hljs-string">"c"</span>,     <span class="hljs-comment">/* 0x010D */</span>
+        <span class="hljs-string">'đ'</span> =&gt; <span class="hljs-string">"d"</span>,     <span class="hljs-comment">/* 0x0111 */</span> <span class="hljs-string">'ę'</span> =&gt; <span class="hljs-string">"e"</span>,     <span class="hljs-comment">/* 0x0119 */</span> <span class="hljs-string">'ĝ'</span> =&gt; <span class="hljs-string">"g"</span>,     <span class="hljs-comment">/* 0x011D */</span> <span class="hljs-string">'ğ'</span> =&gt; <span class="hljs-string">"g"</span>,     <span class="hljs-comment">/* 0x011F */</span> <span class="hljs-string">'ĥ'</span> =&gt; <span class="hljs-string">"h"</span>,     <span class="hljs-comment">/* 0x0125 */</span> <span class="hljs-string">'ı'</span> =&gt; <span class="hljs-string">"i"</span>,     <span class="hljs-comment">/* 0x0131 */</span>
+        <span class="hljs-string">'ĵ'</span> =&gt; <span class="hljs-string">"j"</span>,     <span class="hljs-comment">/* 0x0135 */</span> <span class="hljs-string">'ł'</span> =&gt; <span class="hljs-string">"l"</span>,     <span class="hljs-comment">/* 0x0142 */</span> <span class="hljs-string">'ń'</span> =&gt; <span class="hljs-string">"n"</span>,     <span class="hljs-comment">/* 0x0144 */</span> <span class="hljs-string">'ő'</span> =&gt; <span class="hljs-string">"o"</span>,     <span class="hljs-comment">/* 0x0151 */</span> <span class="hljs-string">'œ'</span> =&gt; <span class="hljs-string">"oe"</span>,    <span class="hljs-comment">/* 0x0153 */</span> <span class="hljs-string">'ř'</span> =&gt; <span class="hljs-string">"r"</span>,     <span class="hljs-comment">/* 0x0159 */</span>
+        <span class="hljs-string">'ś'</span> =&gt; <span class="hljs-string">"s"</span>,     <span class="hljs-comment">/* 0x015B */</span> <span class="hljs-string">'ŝ'</span> =&gt; <span class="hljs-string">"s"</span>,     <span class="hljs-comment">/* 0x015D */</span> <span class="hljs-string">'ş'</span> =&gt; <span class="hljs-string">"s"</span>,     <span class="hljs-comment">/* 0x015F */</span> <span class="hljs-string">'š'</span> =&gt; <span class="hljs-string">"s"</span>,     <span class="hljs-comment">/* 0x0161 */</span> <span class="hljs-string">'ŭ'</span> =&gt; <span class="hljs-string">"u"</span>,     <span class="hljs-comment">/* 0x016D */</span> <span class="hljs-string">'ů'</span> =&gt; <span class="hljs-string">"u"</span>,     <span class="hljs-comment">/* 0x016F */</span>
+        <span class="hljs-string">'ŵ'</span> =&gt; <span class="hljs-string">'w'</span>,     <span class="hljs-comment">/* 0x0175 */</span> <span class="hljs-string">'ŷ'</span> =&gt; <span class="hljs-string">'y'</span>,     <span class="hljs-comment">/* 0x0177 */</span> <span class="hljs-string">'ź'</span> =&gt; <span class="hljs-string">"z"</span>,     <span class="hljs-comment">/* 0x017A */</span> <span class="hljs-string">'ż'</span> =&gt; <span class="hljs-string">"z"</span>,     <span class="hljs-comment">/* 0x017C */</span> <span class="hljs-string">'ž'</span> =&gt; <span class="hljs-string">"z"</span>,     <span class="hljs-comment">/* 0x017E */</span> <span class="hljs-string">'ḓ'</span> =&gt; <span class="hljs-string">'d'</span>,     <span class="hljs-comment">/* 0x1E13 */</span>
+        <span class="hljs-string">'ḙ'</span> =&gt; <span class="hljs-string">'e'</span>,     <span class="hljs-comment">/* 0x1E19 */</span> <span class="hljs-string">'ḽ'</span> =&gt; <span class="hljs-string">'l'</span>,     <span class="hljs-comment">/* 0x1E3D */</span> <span class="hljs-string">'ṋ'</span> =&gt; <span class="hljs-string">'n'</span>,     <span class="hljs-comment">/* 0x1E4B */</span> <span class="hljs-string">'ṱ'</span> =&gt; <span class="hljs-string">'t'</span>,     <span class="hljs-comment">/* 0x1E71 */</span> <span class="hljs-string">'ṷ'</span> =&gt; <span class="hljs-string">'u'</span>,     <span class="hljs-comment">/* 0x1E77 */</span> <span class="hljs-string">'ẑ'</span> =&gt; <span class="hljs-string">'z'</span>,     <span class="hljs-comment">/* 0x1E91 */</span>
+        <span class="hljs-string">'ấ'</span> =&gt; <span class="hljs-string">'a'</span>,     <span class="hljs-comment">/* 0x1EA5 */</span> <span class="hljs-string">'ầ'</span> =&gt; <span class="hljs-string">'a'</span>,     <span class="hljs-comment">/* 0x1EA7 */</span> <span class="hljs-string">'ẩ'</span> =&gt; <span class="hljs-string">'a'</span>,     <span class="hljs-comment">/* 0x1EA9 */</span> <span class="hljs-string">'ẫ'</span> =&gt; <span class="hljs-string">'a'</span>,     <span class="hljs-comment">/* 0x1EAB */</span> <span class="hljs-string">'ậ'</span> =&gt; <span class="hljs-string">'a'</span>,     <span class="hljs-comment">/* 0x1EAD */</span> <span class="hljs-string">'ế'</span> =&gt; <span class="hljs-string">'e'</span>,     <span class="hljs-comment">/* 0x1EBF */</span>
+        <span class="hljs-string">'ề'</span> =&gt; <span class="hljs-string">'e'</span>,     <span class="hljs-comment">/* 0x1EC1 */</span> <span class="hljs-string">'ể'</span> =&gt; <span class="hljs-string">'e'</span>,     <span class="hljs-comment">/* 0x1EC3 */</span> <span class="hljs-string">'ễ'</span> =&gt; <span class="hljs-string">'e'</span>,     <span class="hljs-comment">/* 0x1EC5 */</span> <span class="hljs-string">'ệ'</span> =&gt; <span class="hljs-string">'e'</span>,     <span class="hljs-comment">/* 0x1EC7 */</span> <span class="hljs-string">'ố'</span> =&gt; <span class="hljs-string">'o'</span>,     <span class="hljs-comment">/* 0x1ED1 */</span> <span class="hljs-string">'ồ'</span> =&gt; <span class="hljs-string">'o'</span>,     <span class="hljs-comment">/* 0x1ED3 */</span>
+        <span class="hljs-string">'ổ'</span> =&gt; <span class="hljs-string">'o'</span>,     <span class="hljs-comment">/* 0x1ED5 */</span> <span class="hljs-string">'ỗ'</span> =&gt; <span class="hljs-string">'o'</span>,     <span class="hljs-comment">/* 0x1ED7 */</span> <span class="hljs-string">'ộ'</span> =&gt; <span class="hljs-string">'o'</span>      <span class="hljs-comment">/* 0x1ED9 */</span>
+    );
+
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$options</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <h3 id="constructor">Constructor</h3>
+<p><em>Dasherize</em> <code>constructor</code>([<em>array</em> <code>$options</code>])</p>
+<p>Construct a <code>Dasherize</code> object passing an optional <code>$options</code> array.</p>
+<p>Possible <code>$options</code>:</p>
+<ul>
+<li><code>&#39;encoding&#39;</code> - the character encoding of the provided input</li>
+</ul>
+<p><strong>Example 1</strong> - no arguments</p>
+<pre><code><span class="hljs-variable">$dasherize</span> = <span class="hljs-keyword">new</span> zzzzbov\Utils\Dasherize();
+</code></pre><p><strong>Example 2</strong> - with <code>$options</code></p>
+<pre><code><span class="hljs-variable">$dasherize</span> = <span class="hljs-keyword">new</span> zzzzbov\Utils\Dasherize(<span class="hljs-keyword">array</span>(
+    zzzzbov\Utils\Dasherize::ENCODING =&gt; <span class="hljs-string">'ASCII'</span>
+));
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(<span class="hljs-variable">$options</span> = null)</span> </span>{
+        <span class="hljs-variable">$this</span>-&gt;options = array_merge(<span class="hljs-variable">$options</span> ?: <span class="hljs-keyword">array</span>(), <span class="hljs-keyword">array</span>(
+                <span class="hljs-keyword">self</span>::ENCODING =&gt; <span class="hljs-string">'UTF-8'</span>
+            ));
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <h3 id="transform">transform</h3>
+<p><em>string</em> <code>transform</code>(<em>string</em> <code>$input</code>, [<em>int</em> <code>$maxLength = 80</code>])</p>
+<p>call <code>transform</code> to perform a dasherize transformation on the provided
+<code>$input</code>, truncated to <code>$maxLength</code>. If <code>$maxLength</code> is less than <code>1</code>,
+it will be set to <code>PHP_INT_MAX</code>.</p>
+<p><strong>Example 1</strong> - <code>$input</code> only</p>
+<pre><code><span class="hljs-keyword">echo</span> <span class="hljs-variable">$dasherize</span>-&gt;transform(<span class="hljs-string">'Lorem Ipsum Dolor Sit Amet'</span>);
+<span class="hljs-comment">// 'lorem-ipsum-dolor-sit-amet'</span>
+</code></pre><p><strong>Example 2</strong> - <code>$input</code> and <code>$maxLength</code></p>
+<pre><code><span class="hljs-keyword">echo</span> <span class="hljs-variable">$dasherize</span>-&gt;transform(<span class="hljs-string">'Lorem Ipsum Dolor Sit Amet'</span>, <span class="hljs-number">11</span>);
+<span class="hljs-comment">// 'lorem-ipsum'</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">transform</span><span class="hljs-params">(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$maxLength</span> = <span class="hljs-number">80</span>)</span> </span>{
+        <span class="hljs-keyword">if</span> (is_null(<span class="hljs-variable">$input</span>)) {
+            <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+        }
+
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$maxLength</span> &lt; <span class="hljs-number">1</span>) {
+            <span class="hljs-variable">$maxLength</span> = PHP_INT_MAX;
+        }
+
+        <span class="hljs-variable">$dash</span> = <span class="hljs-keyword">false</span>;
+        <span class="hljs-variable">$length</span> = <span class="hljs-variable">$this</span>-&gt;strlen(<span class="hljs-variable">$input</span>);
+        <span class="hljs-variable">$output</span> = <span class="hljs-keyword">array</span>();
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-variable">$i</span> = <span class="hljs-number">0</span>; <span class="hljs-variable">$i</span> &lt; <span class="hljs-variable">$length</span> &amp;&amp; count(<span class="hljs-variable">$output</span>) &lt; <span class="hljs-variable">$maxLength</span>; ++<span class="hljs-variable">$i</span>) {
+            <span class="hljs-variable">$c</span> = <span class="hljs-variable">$this</span>-&gt;getChar(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$i</span>);
+
+            <span class="hljs-keyword">if</span> ((<span class="hljs-variable">$c</span> &gt;= <span class="hljs-string">'a'</span> &amp;&amp; <span class="hljs-variable">$c</span> &lt;= <span class="hljs-string">'z'</span>) ||
+                (<span class="hljs-variable">$c</span> &gt;= <span class="hljs-string">'0'</span> &amp;&amp; <span class="hljs-variable">$c</span> &lt;= <span class="hljs-string">'9'</span>)) {
+                <span class="hljs-variable">$output</span>[] = <span class="hljs-variable">$c</span>;
+                <span class="hljs-variable">$dash</span> = <span class="hljs-keyword">false</span>;
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-variable">$c</span> &gt;= <span class="hljs-string">'A'</span> &amp;&amp; <span class="hljs-variable">$c</span> &lt;= <span class="hljs-string">'Z'</span>) {
+                <span class="hljs-variable">$output</span>[] = strtolower(<span class="hljs-variable">$c</span>);
+                <span class="hljs-variable">$dash</span> = <span class="hljs-keyword">false</span>;
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (strpos(<span class="hljs-string">" ,./\\-_="</span>, <span class="hljs-variable">$c</span>) !== <span class="hljs-keyword">false</span>) {
+                <span class="hljs-keyword">if</span> (<span class="hljs-variable">$dash</span> || count(<span class="hljs-variable">$output</span>) &lt;= <span class="hljs-number">0</span>) {
+                    <span class="hljs-keyword">continue</span>;
+                }
+                <span class="hljs-variable">$output</span>[] = <span class="hljs-string">'-'</span>;
+                <span class="hljs-variable">$dash</span> = <span class="hljs-keyword">true</span>;
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-variable">$c</span> == <span class="hljs-string">'&amp;'</span>) {
+                <span class="hljs-keyword">if</span> (!<span class="hljs-variable">$dash</span> &amp;&amp; count(<span class="hljs-variable">$output</span>) &gt; <span class="hljs-number">0</span>) {
+                    <span class="hljs-variable">$output</span>[] = <span class="hljs-string">'-'</span>;
+                }
+                <span class="hljs-variable">$output</span>[] = <span class="hljs-string">'and-'</span>;
+                <span class="hljs-variable">$dash</span> = <span class="hljs-keyword">true</span>;
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-variable">$c</span> &gt; chr(<span class="hljs-number">128</span>)) {
+                <span class="hljs-variable">$lower</span> = <span class="hljs-variable">$this</span>-&gt;lowercase(<span class="hljs-variable">$c</span>);
+                <span class="hljs-keyword">if</span> (array_key_exists(<span class="hljs-variable">$lower</span>, <span class="hljs-keyword">self</span>::<span class="hljs-variable">$charMap</span>)) {
+                    <span class="hljs-variable">$output</span>[] = <span class="hljs-keyword">self</span>::<span class="hljs-variable">$charMap</span>[<span class="hljs-variable">$lower</span>];
+                    <span class="hljs-variable">$dash</span> = <span class="hljs-keyword">false</span>;
+                }
+            }
+        }
+
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$dash</span>) {
+            array_pop(<span class="hljs-variable">$output</span>);
+        }
+
+        <span class="hljs-keyword">return</span> implode(<span class="hljs-variable">$output</span>);
+    }
+
+    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strlen</span><span class="hljs-params">(<span class="hljs-variable">$str</span>)</span> </span>{
+        <span class="hljs-keyword">return</span> mb_strlen(<span class="hljs-variable">$str</span>, <span class="hljs-variable">$this</span>-&gt;options[<span class="hljs-keyword">self</span>::ENCODING]);
+    }
+
+    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getChar</span><span class="hljs-params">(<span class="hljs-variable">$str</span>, <span class="hljs-variable">$i</span>)</span> </span>{
+        <span class="hljs-keyword">return</span> mb_substr(<span class="hljs-variable">$str</span>, <span class="hljs-variable">$i</span>, <span class="hljs-number">1</span>, <span class="hljs-variable">$this</span>-&gt;options[<span class="hljs-keyword">self</span>::ENCODING]);
+    }
+
+    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">lowercase</span><span class="hljs-params">(<span class="hljs-variable">$str</span>)</span> </span>{
+        <span class="hljs-keyword">return</span> mb_strtolower(<span class="hljs-variable">$str</span>, <span class="hljs-variable">$this</span>-&gt;options[<span class="hljs-keyword">self</span>::ENCODING]);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <h3 id="defaulttransform">defaultTransform</h3>
+<p>static <em>string</em> <code>defaultTransform</code>(<em>string</em> <code>$input</code>)</p>
+<p>call <code>Dasherize::defaultTransform</code> to perform a default dasherize
+transformation on the provided <code>$input</code>, truncated to <code>$maxLength</code>.
+If <code>$maxLength</code> is less than <code>1</code>, it will be set to <code>PHP_INT_MAX</code>.</p>
+<p><strong>Example 1</strong> - <code>$input</code> only</p>
+<pre><code><span class="hljs-keyword">echo</span> zzzzbov\Utils\Dasherize::defaultTransform(<span class="hljs-string">'Lorem Ipsum Dolor Sit Amet'</span>);
+<span class="hljs-comment">// 'lorem-ipsum-dolor-sit-amet'</span>
+</code></pre><p><strong>Example 2</strong> - <code>$input</code> and <code>$maxLength</code></p>
+<pre><code><span class="hljs-keyword">echo</span> zzzzbov\Utils\Dasherize::defaultTransform(<span class="hljs-string">'Lorem Ipsum Dolor Sit Amet'</span>, <span class="hljs-number">11</span>);
+<span class="hljs-comment">// 'lorem-ipsum'</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defaultTransform</span><span class="hljs-params">(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$maxLength</span> = <span class="hljs-number">80</span>)</span> </span>{
+        <span class="hljs-keyword">static</span> <span class="hljs-variable">$dasherize</span>;
+        <span class="hljs-keyword">if</span> (is_null(<span class="hljs-variable">$dasherize</span>)) {
+            <span class="hljs-variable">$dasherize</span> = <span class="hljs-keyword">new</span> Dasherize();
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-variable">$dasherize</span>-&gt;transform(<span class="hljs-variable">$input</span>);
+    }
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
