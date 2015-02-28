@@ -189,6 +189,6 @@ class Dasherize {
         if (is_null($dasherize)) {
             $dasherize = new Dasherize();
         }
-        return $dasherize->transform($input);
+        return $dasherize->transform($input, $maxLength);
     }
 }
