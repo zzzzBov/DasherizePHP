@@ -1,6 +1,6 @@
 <?php
 
-namespace zzzzbov\Dasherize;
+namespace zzzzbov\Utils;
 
 class Dasherize {
     const ENCODING = 'encoding';
@@ -159,12 +159,16 @@ class Dasherize {
     private function lowercase($str) {
         return mb_strtolower($str, $this->options[self::ENCODING]);
     }
+
+    public static function defaultTransform($input) {
+        static $dasherize;
+        if (is_null($dasherize)) {
+            $dasherize = new Dasherize();
+        }
+        return $dasherize->transform($input);
+    }
 }
 
 function Dasherize($input) {
-    static $dasherize;
-    if (is_null($dasherize)) {
-        $dasherize = new Dasherize();
-    }
-    return $dasherize->transform($input);
+    return Dasherize::defaultTransform($input);
 }

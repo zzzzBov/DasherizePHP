@@ -1,13 +1,21 @@
 <?php
 
-use zzzzbov\Dasherize;
+use zzzzbov\Utils;
+use zzzzbov\Utils\Dasherize;
 
 class DasherizeTest extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider dasherizeProvider
      */
     public function testDasherize($input, $output) {
-        $this->assertSame($output, Dasherize\Dasherize($input), "\"{$input}\" should be dasherized as \"{$output}\"");
+        $this->assertSame($output, Utils\Dasherize($input), "\"{$input}\" should be dasherized as \"{$output}\"");
+    }
+
+    /**
+     * @dataProvider dasherizeProvider
+     */
+    public function testDefaultTransform($input, $output) {
+        $this->assertSame($output, Dasherize::defaultTransform($input), "\"{$input}\" should be dasherized as \"{$output}\"");
     }
 
     public function dasherizeProvider() {
