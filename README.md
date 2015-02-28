@@ -1,6 +1,6 @@
 # DasherizePHP
 
-Dasherize.php Library v0.0.0
+Dasherize.php Library v0.0.0 ![Travis CI Build Status][1]
 
 A simple text-to-slug conversion tool
 <https://github.com/zzzzBov/DasherizePHP>
@@ -11,6 +11,7 @@ Released under the MIT license
 
 ## API Documentation
 
-[API documentation may be viewed on htmlpreview.github.io][1], or by downloading this repo and opening `docs/Dasherize.html`.
+[API documentation may be viewed on htmlpreview.github.io][2], or by downloading this repo and opening `docs/Dasherize.html`.
 
-[1]: http://htmlpreview.github.io/?https://github.com/zzzzBov/DasherizePHP/blob/master/docs/Dasherize.html
+[1]: https://travis-ci.org/zzzzBov/DasherizePHP.svg?branch=master
+[2]: http://htmlpreview.github.io/?https://github.com/zzzzBov/DasherizePHP/blob/master/docs/Dasherize.html
