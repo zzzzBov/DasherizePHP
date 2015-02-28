@@ -12,6 +12,7 @@ class DasherizeTest extends PHPUnit_Framework_TestCase {
 
     public function dasherizeProvider() {
         return array(
+            array(null, ''),
             array('', ''),
             array('lorem', 'lorem'),
             array('lorem ipsum', 'lorem-ipsum'),
@@ -24,7 +25,7 @@ class DasherizeTest extends PHPUnit_Framework_TestCase {
             array('lorem 123 ipsum', 'lorem-123-ipsum'),
             array('lorem & ipsum', 'lorem-and-ipsum'),
             array('&amp;', 'and-amp'),
-            array("lorem\'d ipsum", 'loremd-ipsum'),
+            array("lorem'd ipsum", 'loremd-ipsum'),
             array(
                 'ÂâẤấẦầẨẩẪẫẬậĈĉḒḓÊêḘḙẾếỀềỂểỄễỆệĜĝĤĥÎîĴĵḼḽṊṋÔôỐốỒồỔổỖỗỘộŜŝṰṱÛûṶṷŴŵŶŷẐẑ',
                 'aaaaaaaaaaaaccddeeeeeeeeeeeeeegghhiijjllnnoooooooooooossttuuuuwwyyzz'
