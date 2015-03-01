@@ -1,0 +1,17 @@
+{
+    "authors": [{
+        "name": "zzzzBov",
+        "email": "zzzzbov@gmail.com",
+        "homepage": "http://zzzzbov.com",
+        "role": "Developer"
+    }],
+    "name": "zzzzbov/Dasherize",
+    "version": "0.0.0",
+    "description": "A simple text-to-slug conversion tool",
+    "homepage": "https://github.com/zzzzBov/DasherizePHP",
+    "license": "MIT",
+    "support": {
+        "source": "https://github.com/zzzzBov/DasherizePHP",
+        "issues": "https://github.com/zzzzBov/DasherizePHP/issues"
+    }
+}
