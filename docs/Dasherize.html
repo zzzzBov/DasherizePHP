@@ -94,6 +94,8 @@ than <code>1</code>, it will be set to <code>PHP_INT_MAX</code>.</p>
 
     <span class="hljs-keyword">const</span> ENCODING = <span class="hljs-string">'encoding'</span>;
 
+    <span class="hljs-keyword">const</span> MAX_LENGTH = <span class="hljs-string">'maxLength'</span>;
+
     <span class="hljs-keyword">const</span> VERSION = <span class="hljs-string">'0.0.0'</span>;
 
     <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-variable">$charMap</span> = <span class="hljs-keyword">array</span>(
@@ -130,20 +132,24 @@ than <code>1</code>, it will be set to <code>PHP_INT_MAX</code>.</p>
 <p>Possible <code>$options</code>:</p>
 <ul>
 <li><code>&#39;encoding&#39;</code> - the character encoding of the provided input</li>
+<li><code>&#39;maxLength&#39;</code> - maximum number of characters to return. If
+<code>&#39;maxLength&#39;</code> is less than <code>1</code> it will be set to <code>PHP_INT_MAX</code>.</li>
 </ul>
 <p><strong>Example 1</strong> - no arguments</p>
 <pre><code><span class="hljs-variable">$dasherize</span> = <span class="hljs-keyword">new</span> zzzzbov\Utils\Dasherize();
 </code></pre><p><strong>Example 2</strong> - with <code>$options</code></p>
 <pre><code><span class="hljs-variable">$dasherize</span> = <span class="hljs-keyword">new</span> zzzzbov\Utils\Dasherize(<span class="hljs-keyword">array</span>(
-    zzzzbov\Utils\Dasherize::ENCODING =&gt; <span class="hljs-string">'ASCII'</span>
+    zzzzbov\Utils\Dasherize::ENCODING =&gt; <span class="hljs-string">'ASCII'</span>,
+    zzzzbov\Utils\Dasherize::MAX_LENGTH =&gt; <span class="hljs-number">80</span>
 ));
 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(<span class="hljs-variable">$options</span> = null)</span> </span>{
-        <span class="hljs-variable">$this</span>-&gt;options = array_merge(<span class="hljs-variable">$options</span> ?: <span class="hljs-keyword">array</span>(), <span class="hljs-keyword">array</span>(
-                <span class="hljs-keyword">self</span>::ENCODING =&gt; <span class="hljs-string">'UTF-8'</span>
-            ));
+        <span class="hljs-variable">$this</span>-&gt;options = array_merge(<span class="hljs-keyword">array</span>(
+                <span class="hljs-keyword">self</span>::ENCODING      =&gt; <span class="hljs-string">'UTF-8'</span>,
+                <span class="hljs-keyword">self</span>::MAX_LENGTH    =&gt; <span class="hljs-number">80</span>
+            ), <span class="hljs-variable">$options</span> ?: <span class="hljs-keyword">array</span>());
     }</pre></div></div>
             
         </li>
@@ -156,24 +162,21 @@ than <code>1</code>, it will be set to <code>PHP_INT_MAX</code>.</p>
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <h3 id="transform">transform</h3>
-<p><em>string</em> <code>transform</code>(<em>string</em> <code>$input</code>, [<em>int</em> <code>$maxLength = 80</code>])</p>
+<p><em>string</em> <code>transform</code>(<em>string</em> <code>$input</code>)</p>
 <p>call <code>transform</code> to perform a dasherize transformation on the provided
-<code>$input</code>, truncated to <code>$maxLength</code>. If <code>$maxLength</code> is less than <code>1</code>,
-it will be set to <code>PHP_INT_MAX</code>.</p>
+<code>$input</code>.</p>
 <p><strong>Example 1</strong> - <code>$input</code> only</p>
 <pre><code><span class="hljs-keyword">echo</span> <span class="hljs-variable">$dasherize</span>-&gt;transform(<span class="hljs-string">'Lorem Ipsum Dolor Sit Amet'</span>);
 <span class="hljs-comment">// 'lorem-ipsum-dolor-sit-amet'</span>
-</code></pre><p><strong>Example 2</strong> - <code>$input</code> and <code>$maxLength</code></p>
-<pre><code><span class="hljs-keyword">echo</span> <span class="hljs-variable">$dasherize</span>-&gt;transform(<span class="hljs-string">'Lorem Ipsum Dolor Sit Amet'</span>, <span class="hljs-number">11</span>);
-<span class="hljs-comment">// 'lorem-ipsum'</span>
 </code></pre>
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">transform</span><span class="hljs-params">(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$maxLength</span> = <span class="hljs-number">80</span>)</span> </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">transform</span><span class="hljs-params">(<span class="hljs-variable">$input</span>)</span> </span>{
         <span class="hljs-keyword">if</span> (is_null(<span class="hljs-variable">$input</span>)) {
             <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
         }
 
+        <span class="hljs-variable">$maxLength</span> = <span class="hljs-variable">$this</span>-&gt;options[<span class="hljs-keyword">self</span>::MAX_LENGTH];
         <span class="hljs-keyword">if</span> (<span class="hljs-variable">$maxLength</span> &lt; <span class="hljs-number">1</span>) {
             <span class="hljs-variable">$maxLength</span> = PHP_INT_MAX;
         }
@@ -256,11 +259,10 @@ If <code>$maxLength</code> is less than <code>1</code>, it will be set to <code>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defaultTransform</span><span class="hljs-params">(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$maxLength</span> = <span class="hljs-number">80</span>)</span> </span>{
-        <span class="hljs-keyword">static</span> <span class="hljs-variable">$dasherize</span>;
-        <span class="hljs-keyword">if</span> (is_null(<span class="hljs-variable">$dasherize</span>)) {
-            <span class="hljs-variable">$dasherize</span> = <span class="hljs-keyword">new</span> Dasherize();
-        }
-        <span class="hljs-keyword">return</span> <span class="hljs-variable">$dasherize</span>-&gt;transform(<span class="hljs-variable">$input</span>, <span class="hljs-variable">$maxLength</span>);
+        <span class="hljs-variable">$dasherize</span> = <span class="hljs-keyword">new</span> Dasherize(<span class="hljs-keyword">array</span>(
+                <span class="hljs-keyword">self</span>::MAX_LENGTH =&gt; <span class="hljs-variable">$maxLength</span>
+            ));
+        <span class="hljs-keyword">return</span> <span class="hljs-variable">$dasherize</span>-&gt;transform(<span class="hljs-variable">$input</span>);
     }
 }</pre></div></div>
             

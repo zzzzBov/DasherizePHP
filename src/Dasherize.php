@@ -38,6 +38,8 @@ class Dasherize {
 
     const ENCODING = 'encoding';
 
+    const MAX_LENGTH = 'maxLength';
+
     const VERSION = '0.0.0';
 
     private static $charMap = array(
@@ -68,6 +70,8 @@ class Dasherize {
     // Possible `$options`:
     //
     //  * `'encoding'` - the character encoding of the provided input
+    //  * `'maxLength'` - maximum number of characters to return. If
+    //    `'maxLength'` is less than `1` it will be set to `PHP_INT_MAX`.
     //
     // **Example 1** - no arguments
     //
@@ -76,38 +80,35 @@ class Dasherize {
     // **Example 2** - with `$options`
     //
     //     $dasherize = new zzzzbov\Utils\Dasherize(array(
-    //         zzzzbov\Utils\Dasherize::ENCODING => 'ASCII'
+    //         zzzzbov\Utils\Dasherize::ENCODING => 'ASCII',
+    //         zzzzbov\Utils\Dasherize::MAX_LENGTH => 80
     //     ));
     //
     public function __construct($options = null) {
-        $this->options = array_merge($options ?: array(), array(
-                self::ENCODING => 'UTF-8'
-            ));
+        $this->options = array_merge(array(
+                self::ENCODING      => 'UTF-8',
+                self::MAX_LENGTH    => 80
+            ), $options ?: array());
     }
 
     // ### transform
     //
-    // *string* `transform`(*string* `$input`, [*int* `$maxLength = 80`])
+    // *string* `transform`(*string* `$input`)
     //
     // call `transform` to perform a dasherize transformation on the provided
-    // `$input`, truncated to `$maxLength`. If `$maxLength` is less than `1`,
-    // it will be set to `PHP_INT_MAX`.
+    // `$input`.
     //
     // **Example 1** - `$input` only
     //
     //     echo $dasherize->transform('Lorem Ipsum Dolor Sit Amet');
     //     // 'lorem-ipsum-dolor-sit-amet'
     //
-    // **Example 2** - `$input` and `$maxLength`
-    //
-    //     echo $dasherize->transform('Lorem Ipsum Dolor Sit Amet', 11);
-    //     // 'lorem-ipsum'
-    //
-    public function transform($input, $maxLength = 80) {
+    public function transform($input) {
         if (is_null($input)) {
             return '';
         }
 
+        $maxLength = $this->options[self::MAX_LENGTH];
         if ($maxLength < 1) {
             $maxLength = PHP_INT_MAX;
         }
@@ -185,10 +186,9 @@ class Dasherize {
     //     // 'lorem-ipsum'
     //
     public static function defaultTransform($input, $maxLength = 80) {
-        static $dasherize;
-        if (is_null($dasherize)) {
-            $dasherize = new Dasherize();
-        }
-        return $dasherize->transform($input, $maxLength);
+        $dasherize = new Dasherize(array(
+            self::MAX_LENGTH => $maxLength
+        ));
+        return $dasherize->transform($input);
     }
 }
