@@ -5,7 +5,7 @@
         "homepage": "http://zzzzbov.com",
         "role": "Developer"
     }],
-    "name": "zzzzbov/Dasherize",
+    "name": "zzzzbov/dasherize",
     "version": "0.0.0-alpha",
     "description": "A simple text-to-slug conversion tool",
     "homepage": "https://github.com/zzzzBov/DasherizePHP",
