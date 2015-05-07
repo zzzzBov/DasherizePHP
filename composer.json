@@ -6,7 +6,7 @@
         "role": "Developer"
     }],
     "name": "zzzzbov/Dasherize",
-    "version": "0.0.0",
+    "version": "0.0.0-alpha",
     "description": "A simple text-to-slug conversion tool",
     "homepage": "https://github.com/zzzzBov/DasherizePHP",
     "license": "MIT",
