@@ -13,5 +13,10 @@
     "support": {
         "source": "https://github.com/zzzzBov/DasherizePHP",
         "issues": "https://github.com/zzzzBov/DasherizePHP/issues"
+    },
+    "autoload": {
+        "psr-4": {
+            "zzzzbov\\Utils\\Dasherize": "src/"
+        }
     }
 }
